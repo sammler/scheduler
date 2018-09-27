@@ -1,0 +1,38 @@
+{
+  "name": "scheduler",
+  "version": "0.1.0",
+  "description": "Scheduler for sammler.io.",
+  "main": "./src/index.js",
+  "directories": {
+    "doc": "docs"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sammler/scheduler.git"
+  },
+  "keywords": [
+    "sammler",
+    "sammlerio",
+    "scheduler"
+  ],
+  "author": "Stefan Walther <swr.nixda@gmail.com> (http://qliksite.io)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/sammlerio/scheduler/issues"
+  },
+  "homepage": "https://github.com/sammlerio/scheduler#readme",
+  "devDependencies": {
+    "chai": "^4.2.0",
+    "mocha": "^5.2.0",
+    "nyc": "^13.0.1"
+  },
+  "dependencies": {
+    "js-yaml": "^3.12.0",
+    "nats": "^1.0.1",
+    "uuid": "^3.3.2",
+    "winster": "^0.2.12"
+  }
+}
