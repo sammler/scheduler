@@ -28,9 +28,7 @@ class JobLoader {
         jobs.push(job);
       });
 
-
     });
-
 
     return jobs;
   }

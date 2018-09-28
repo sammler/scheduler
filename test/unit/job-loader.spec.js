@@ -2,8 +2,6 @@ const JobLoader = require('./../../src/job-loader');
 const path = require('path');
 
 describe('job-loader', () => {
-
-
   it('has static method `fromFiles()`', () => {
     expect(JobLoader).to.has.property('fromFiles').to.be.a('function');
   });
@@ -13,10 +11,8 @@ describe('job-loader', () => {
       expect(() => JobLoader.fromFiles()).to.throw(/Property `files` cannot be empty./);
     });
     it('returns an empty array if an empty array of files is passed ...', () => {
-
       let result = JobLoader.fromFiles([]);
       expect(result).to.be.an('array').of.length(0);
-
     });
     it('throws an error if one of the files do not exist', () => {
       let files = [
@@ -31,8 +27,7 @@ describe('job-loader', () => {
       let result;
       try {
         result = JobLoader.fromFiles(files);
-      }
-      catch (err) {
+      } catch (err) {
         if (err) {
           console.log(err);
         }
@@ -50,13 +45,10 @@ describe('job-loader', () => {
       let result;
       try {
         result = JobLoader.fromFiles(files);
-      }
-      catch (err) {
+      } catch (err) {
         expect(err).to.not.exist;
       }
       expect(result).to.be.an('array').of.length(5);
     });
   });
-
-
 });

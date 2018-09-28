@@ -1,7 +1,7 @@
-const nats = require('nats');
-const logger = require('winster').instance();
+// Const nats = require('nats');
+// const logger = require('winster').instance();
 const _ = require('lodash');
-const schedule = require('node-schedule');
+// Const schedule = require('node-schedule');
 const config = require('./config/config');
 
 checkRequiredEnv();
@@ -17,9 +17,7 @@ function checkRequiredEnv() {
 }
 
 if (config.LOAD_JOBS_FROM_FILE) {
-  console.log(config.JOBS);
+  console.log(config.JOB_FILES);
 
 }
-
-
 

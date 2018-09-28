@@ -57,7 +57,7 @@ ENV HOME /opt/scheduler
 RUN mkdir -p $HOME
 WORKDIR $HOME
 
-COPY index.js package.json ./
+COPY package.json ./
 
 # copy production node_modules
 COPY --from=dependencies $HOME/prod_node_modules ./node_modules
