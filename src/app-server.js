@@ -4,7 +4,7 @@ class AppServer {
 
   constructor(config) {
     this.config = Object.assign(defaultConfig, config);
-    //this._logConfig();
+    // This._logConfig();
   }
 
   _logConfig() {
