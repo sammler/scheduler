@@ -2,11 +2,9 @@
 
 > Scheduler for sammler.io.
 
-[![David](https://img.shields.io/david/stefanwalther/scheduler.svg)](https://github.com/stefanwalther/scheduler)
-[![Codecov](https://img.shields.io/codecov/c/github/stefanwalther/scheduler.svg?logo=codecov)](https://codecov.io/gh/stefanwalther/scheduler)
-[![CircleCI](https://img.shields.io/circleci/project/github/stefanwalther/scheduler.svg?logo=circleci)](https://circleci.com/gh/stefanwalther/scheduler/tree/master)
-[![Travis (.org) branch](https://img.shields.io/travis/stefanwalther/scheduler/master.svg?logo=travis)](https://travis-ci.org/stefanwalther/scheduler.svg?branch=master)
-[![Codacy Badge](https://api.codacy.com/project/badge/Grade/cd348c2723f54f7398399549225ca2e9)](https://www.codacy.com/app/stefan-walther/sense-go?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=stefanwalther/sense-go&amp;utm_campaign=badger)
+[![David](https://img.shields.io/david/sammler/scheduler.svg)](https://github.com/sammler/scheduler)
+[![Codecov](https://img.shields.io/codecov/c/github/sammler/scheduler.svg?logo=codecov)](https://codecov.io/gh/sammler/scheduler)
+[![CircleCI](https://img.shields.io/circleci/project/github/sammmler/scheduler.svg?logo=circleci)](https://circleci.com/gh/sammler/scheduler/tree/master)
 
 ---
 
@@ -37,7 +35,7 @@ Environment variables used by the service:
 | Name                  | Description                                                             | Type          | Default Value |
 | ---                   | ---                                                                     | ---           | ---           |
 | `LOAD_JOBS_FROM_FILE` | Indicates whether some default jobs should be loaded from files or not. | boolean       | false         |
-| `JOB_FILES`           | Comma separated list of files to load from                              | string        | ''            |
+| `JOB_FILES`           | Comma separated list of files to load from.                              | string        | ''            |
 
 ## About
 
