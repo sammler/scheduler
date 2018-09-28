@@ -17,13 +17,6 @@ describe('app-server', () => {
     expect(appServer.config.PORT).to.be.equal(defaultConfig.PORT);
   });
 
-  it('allows to change env variables', () => {
-    process.env.NODE_ENV = 'production';
-    let appServer = new AppServer();
-    expect(appServer.config.NODE_ENV).to.be.equal('production');
-    expect(appServer.config.PORT).to.be.equal(defaultConfig.PORT); // Still the default value
-  });
-
   it('allows to pass in values to override env variables', () => {
     let config = {
       PORT: 5000
