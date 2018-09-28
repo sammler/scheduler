@@ -1,0 +1,9 @@
+jobs:
+  - name: heartbeat_interval
+    enabled: true
+    strategy: interval
+    interval: 2000
+  - name: heartbeat_every_minute
+    enabled: true
+    strategy: cron
+    cron_def: "* * * * *"

@@ -1,0 +1,1 @@
+Service to publish scheduled message to NATS.
