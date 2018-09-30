@@ -1,7 +1,7 @@
 const JobLoader = require('./../../src/job-loader');
 const path = require('path');
 
-describe('job-loader', () => {
+describe('Unit Test => job-loader', () => {
   it('has static method `fromFiles()`', () => {
     expect(JobLoader).to.has.property('fromFiles').to.be.a('function');
   });

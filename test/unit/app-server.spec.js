@@ -1,7 +1,7 @@
 const AppServer = require('./../../src/app-server');
 const defaultConfig = require('./../../src/config/config');
 
-describe('app-server', () => {
+describe('Unit Test => app-server', () => {
   it('has some methods', () => {
     let appServer = new AppServer();
     expect(appServer).to.have.a.property('start').to.be.a('function');
