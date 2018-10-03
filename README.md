@@ -4,7 +4,7 @@
 
 [![David](https://img.shields.io/david/sammler/scheduler.svg)](https://github.com/sammler/scheduler)
 [![Codecov](https://img.shields.io/codecov/c/github/sammler/scheduler.svg?logo=codecov)](https://codecov.io/gh/sammler/scheduler)
-[![CircleCI](https://img.shields.io/circleci/project/github/sammmler/scheduler.svg?logo=circleci)](https://circleci.com/gh/sammler/scheduler/tree/master)
+[![CircleCI branch](https://img.shields.io/circleci/project/github/sammler/scheduler/master.svg?style=flat-square)](https://circleci.com/gh/sammler/scheduler)
 
 ---
 
