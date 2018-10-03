@@ -13,20 +13,20 @@ ENV HOME /opt/scheduler
 RUN mkdir -p $HOME
 WORKDIR $HOME
 
-COPY package.json ./
+COPY .npmrc package.json ./
 
 ## -------------------------------------------------------------------
 ##                            DEPENDENCIES
 ## -------------------------------------------------------------------
 FROM BASE as DEPENDENCIES
 
-RUN npm install --silent --only=production
+RUN npm install --only=production
 
 # copy production node_modules aside
 RUN cp -R node_modules prod_node_modules
 
 # install ALL node_modules, including 'devDependencies'
-RUN npm install --silent
+RUN npm install
 
 
 ## -------------------------------------------------------------------

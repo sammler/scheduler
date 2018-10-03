@@ -6,7 +6,7 @@ const JobLoader = require('./job-loader');
 const nodeSchedule = require('node-schedule');
 const uuidv1 = require('uuid/v1');
 const NATS = require('nats');
-const nats = NATS.connect({url: 'nats://localhost:4222', json: true});
+const nats = NATS.connect({url: 'nats://localhost:4222', json: true}); // Todo: this needs to be made configurable
 
 const JOB_SEED_SRC = path.resolve(__dirname, './config/job-seeds');
 
@@ -66,13 +66,14 @@ class AppServer {
   }
 
   _initCronJob(job) {
-    let j = nodeSchedule.scheduleJob(job.cron_def, o => {
+    // Todo: we have to validate the job here ...
+    let j = nodeSchedule.scheduleJob(job.cron.def, o => {
       let currentJob = job;
       currentJob.trace_id = uuidv1();
       currentJob.ts = o;
       logger.trace('OK, a job has been triggered (by cron): ', currentJob);
       nats.publish(currentJob.name, currentJob, () => {
-        logger.trace('OK, we have published a job');
+        logger.trace(`OK, we have published a message triggered by the job: ${currentJob.name}`);
       });
 
     });
@@ -85,7 +86,7 @@ class AppServer {
    * This includes:
    *   - Initializing the jobs.
    */
-  start() {
+  async start() {
     this.logger.trace('start');
     this._init();
   }
@@ -96,7 +97,7 @@ class AppServer {
    * This includes:
    *   - Stopping the running jobs.
    */
-  stop() {
+  async stop() {
 
   }
 }
