@@ -26,9 +26,13 @@ down:
 .PHONY: down
 
 down-deps:										## Tear down services required for development
-	docker-compose -f docker-compose.deps.yml down
+	docker-compose -f docker-compose.deps.yml down -t 0
 .PHONY: down-deps
 
 build:												## Build the docker image.
 	docker build -t sammlerio/scheduler .
 .PHONY: build
+
+start:
+	npm run start
+.PHONY: start

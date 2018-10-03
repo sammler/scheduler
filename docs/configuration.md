@@ -2,7 +2,7 @@
 | ---                   | ---                                                                     | ---           | ---           |
 | `LOAD_JOBS_FROM_FILE` | Indicates whether some default jobs should be loaded from files or not. | boolean       | false         |
 | `JOB_FILES`           | Comma separated list of extra files to load from.                       | string        | ''            |
-
+| `NATS_URI`            | Resource of nats                                                        | string
 
 ## Loading job seeds
 
