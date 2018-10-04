@@ -73,9 +73,9 @@ class AppServer {
     let j = nodeSchedule.scheduleJob(job.cron.def, o => {
       let currentJob = job;
       currentJob.trace_id = uuidv1();
-      currentJob.ts = o;
+      currentJob.ts_pub = o;
       logger.trace('OK, a job has been triggered (by cron): ', currentJob);
-      this._nats.publish(currentJob.name, currentJob, () => {
+      this._nats.publish(currentJob.nats.subject, currentJob, () => {
         logger.trace(`OK, we have published a message triggered by the job: ${currentJob.name}`);
       });
 

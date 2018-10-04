@@ -4,6 +4,8 @@ jobs:
     strategy: cron
     cron:
       def: "* * * * *"
+    nats:
+      subject: heartbeat.every.minute
     payload:
       foo: bar
   - name: heartbeat_every_two_minutes
@@ -11,6 +13,8 @@ jobs:
     strategy: cron
     cron:
       def: "*/2 * * * *"
+    nats:
+      subject: heartbeat.every.two_minutes
     payload:
       foo: bar
   - name: heartbeat_every_five_minutes
@@ -18,5 +22,7 @@ jobs:
     strategy: cron
     cron:
       def: "*/5 * * * *"
+    nats:
+      subject: heartbeat.every.five_minutes
     payload:
       foo: bar
