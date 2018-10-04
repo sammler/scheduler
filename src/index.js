@@ -15,6 +15,6 @@ function checkRequiredEnv() {
   // }
 }
 
-const appServer = new AppServer();
+const appServer = new AppServer(defaultConfig);
 appServer.start();
 

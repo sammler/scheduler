@@ -29,6 +29,10 @@ down-deps:										## Tear down services required for development
 	docker-compose -f docker-compose.deps.yml down -t 0
 .PHONY: down-deps
 
+del-nats-store:
+	rm -rf ./.datastore
+.PHONY: del-nats-store
+
 build:												## Build the docker image.
 	docker build -t sammlerio/scheduler .
 .PHONY: build

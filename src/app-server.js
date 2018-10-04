@@ -3,9 +3,9 @@ const logger = require('winster').instance();
 const path = require('path');
 const fileHelpers = require('./lib/file-helpers');
 const JobLoader = require('./job-loader');
-const nodeSchedule = require('node-schedule');
+const schedule = require('node-schedule');
 const uuidv1 = require('uuid/v1');
-const NATS = require('nats');
+const StanPublisher = require('./stan-publisher');
 
 const JOB_SEED_SRC = path.resolve(__dirname, './config/job-seeds');
 
@@ -17,16 +17,20 @@ class AppServer {
     this.jobDefinitionSeedFiles = [];
     this.jobDefinitions = [];
     this.cronJobs = [];
-    this._logConfig();
-    this._nats = NATS.connect({url: this.config.NATS_URI, json: true});
-    this._nats_init();
-  }
+    // this._logConfig();
 
-  _nats_init() {
-    this._nats.on('error', e => {
-      console.log('Error [' + this._nats.options.url + ']: ' + e);
-      process.exit();
-    });
+    const killJobs = function() {
+      logger.trace('OK, let\'s kill some left-overs:');
+      if (this.cronJobs) {
+        this.cronJobs.forEach(cronJob => {
+          console.log('Cancelling cronJob: ', cronJob.name);
+          cronJob.cancel();
+        })
+      }
+    };
+
+    process.on('SIGINT', killJobs);
+    process.on('SIGUSR2', killJobs); // nodemon restart
   }
 
   _logConfig() {
@@ -42,6 +46,10 @@ class AppServer {
    */
   _init() {
     this.logger.trace('_init');
+    this.stan = new StanPublisher();
+    this.stan.connect();
+    process.on('SIGINT', this.stan.kill);
+    process.on('SIGUSR2', this.stan.kill);
     this._initSeededJobDefs();
   }
 
@@ -49,10 +57,10 @@ class AppServer {
     this.logger.trace('_initSeededJobDefs');
 
     this.jobDefinitionSeedFiles = fileHelpers.getFiles(JOB_SEED_SRC);
-    logger.trace('jobDefinitionSeedFiles', this.jobDefinitionSeedFiles);
+    //logger.trace('jobDefinitionSeedFiles', this.jobDefinitionSeedFiles);
 
     this.jobDefinitions = JobLoader.fromFiles(this.jobDefinitionSeedFiles);
-    logger.trace('jobDefinitions', this.jobDefinitions);
+    //logger.trace('jobDefinitions', this.jobDefinitions);
 
     this._initJobs();
   }
@@ -70,15 +78,21 @@ class AppServer {
 
   _initCronJob(job) {
     // Todo: we have to validate the job here ...
-    let j = nodeSchedule.scheduleJob(job.cron.def, o => {
+    let j = schedule.scheduleJob(job.cron.def, o => {
       let currentJob = job;
       currentJob.trace_id = uuidv1();
       currentJob.ts_pub = o;
-      logger.trace('OK, a job has been triggered (by cron): ', currentJob);
-      this._nats.publish(currentJob.nats.subject, currentJob, () => {
-        logger.trace(`OK, we have published a message triggered by the job: ${currentJob.name}`);
-      });
+      logger.trace(`OK, a job has been triggered (by cron): ${currentJob.name}`);
+      //this._nats.publish(currentJob.nats.subject, currentJob, () => {
+      //  logger.trace(`OK, we have published a message triggered by the job: ${currentJob.name}`);
+      //});
 
+    });
+    process.on('SIGINT', function () {
+      if (j) {
+        logger.trace('Killing job', j.name);
+        j.cancel();
+      }
     });
     this.cronJobs.push(j);
   }
