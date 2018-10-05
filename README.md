@@ -4,7 +4,7 @@
 
 [![David](https://img.shields.io/david/sammler/scheduler.svg)](https://github.com/sammler/scheduler)
 [![Codecov](https://img.shields.io/codecov/c/github/sammler/scheduler.svg?logo=codecov)](https://codecov.io/gh/sammler/scheduler)
-[![CircleCI branch](https://img.shields.io/circleci/project/github/sammler/scheduler/master.svg)](https://circleci.com/gh/sammler/scheduler)
+[![CircleCI](https://img.shields.io/circleci/project/github/sammler/scheduler/master.svg)](https://circleci.com/gh/sammler/scheduler)
 
 ---
 
@@ -15,6 +15,28 @@ Service to publish scheduled message to NATS.
 Note: This service is not meant to be used in production, as it cannot horizontally scale. Instead the primary purpose is to use it in a non-production/development environment.
 
 ## Installation
+
+### Docker Run
+
+```
+$ docker run sammlerio/scheduler
+```
+
+### Docker Compose
+
+```
+version: '3.3'
+services:
+  
+  scheduler:
+    image: sammlerio/scheduler
+    ports:
+      - "3001:3001"
+    environment:
+      - NATS_URI=nats://nats:4222
+      - LOAD_JOBS_FROM_FILE=true
+      - JOB_FILES=file1.yml,file2.yml
+```
 
 ## Usage
 
@@ -34,10 +56,12 @@ $ make down-deps
 
 Environment variables used by the service:
 
-| Name                  | Description                                                             | Type          | Default Value |
-| ---                   | ---                                                                     | ---           | ---           |
-| `LOAD_JOBS_FROM_FILE` | Indicates whether some default jobs should be loaded from files or not. | boolean       | false         |
-| `JOB_FILES`           | Comma separated list of extra files to load from.                       | string        | ''            |
+| Name                  | Description                                                             | Type          | Default Value           |
+| ---                   | ---                                                                     | ---           | ---                     |
+| `LOAD_JOBS_FROM_FILE` | Indicates whether some default jobs should be loaded from files or not. | boolean       | `false`                 |
+| `JOB_FILES`           | Comma separated list of extra files to load from.                       | string        | ''                      |
+| `NATS_URI`            | Resource location of NATS                                               | string        | `nats://localhost:4222` |
+| `PORT`                | Port of the service.                                                    | string        | `3001`                  |
 
 ## Loading job seeds
 

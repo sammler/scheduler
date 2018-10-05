@@ -1,8 +1,10 @@
-| Name                  | Description                                                             | Type          | Default Value |
-| ---                   | ---                                                                     | ---           | ---           |
-| `LOAD_JOBS_FROM_FILE` | Indicates whether some default jobs should be loaded from files or not. | boolean       | false         |
-| `JOB_FILES`           | Comma separated list of extra files to load from.                       | string        | ''            |
-| `NATS_URI`            | Resource of nats                                                        | string
+| Name                  | Description                                                             | Type          | Default Value           |
+| ---                   | ---                                                                     | ---           | ---                     |
+| `LOAD_JOBS_FROM_FILE` | Indicates whether some default jobs should be loaded from files or not. | boolean       | `false`                 |
+| `JOB_FILES`           | Comma separated list of extra files to load from.                       | string        | ''                      |
+| `NATS_URI`            | Resource location of NATS                                               | string        | `nats://localhost:4222` |
+| `PORT`                | Port of the service.                                                    | string        | `3001`                  |
+
 
 ## Loading job seeds
 
