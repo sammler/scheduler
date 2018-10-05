@@ -7,7 +7,7 @@ $ docker run sammlerio/scheduler
 
 ### Docker Compose
 
-```
+```yaml
 version: '3.3'
 services:
 
