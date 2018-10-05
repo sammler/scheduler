@@ -29,9 +29,9 @@ class StanPublisher {
     // process.on('SIGUSR2', killStan); // nodemon restart
   }
 
-  connect(clusterId, clientId, opts) {
+  connect(clusterId, clientId, natsOpts) {
 
-    const defaultOpts = Object.assign(opts || {}, {
+    const opts = Object.assign(natsOpts || {}, {
       json: true,
       reconnect: true,
       reconnectTimeWait: 2000,
@@ -41,7 +41,7 @@ class StanPublisher {
 
     return new Promise((resolve, reject) => {
       logger.trace('clientId', this.clientId);
-      let stanInstance = Stan.connect(clusterId || this.clusterId, clientId || this.clientId, defaultOpts, function () {
+      let stanInstance = Stan.connect(clusterId || this.clusterId, clientId || this.clientId, opts, function () {
         console.log('foo');
       });
 

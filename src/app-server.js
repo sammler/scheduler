@@ -18,7 +18,7 @@ class AppServer {
     this.jobDefinitionSeedFiles = [];
     this.jobDefinitions = [];
     this.cronJobs = [];
-    // This._logConfig();
+    this._logConfig();
 
     const killJobs = function () {
       logger.trace('OK, let\'s kill some left-overs:');
@@ -46,17 +46,19 @@ class AppServer {
    * @private
    */
   async _init() {
-    this.logger.trace('_init');
-
-    await this._initStan();
     this._initSeededJobDefs();
+    await this._initStan();
   }
 
   async _initStan() {
 
     let stanPublisher = new StanPublisher();
+    let natsOpts = {
+      uri: defaultConfig.NATS_URI || 'nats://localhost:4222'
+    };
+    console.log(`_initStan:natsOpts: ${natsOpts}`);
     try {
-      this.stan = await stanPublisher.connect();
+      this.stan = await stanPublisher.connect(null, null, natsOpts);
     } catch (err) {
       this.logger.error(`Error initializing stan: "${err}"`);
       process.exit(1);
@@ -68,6 +70,7 @@ class AppServer {
 
     this.jobDefinitionSeedFiles = fileHelpers.getFiles(JOB_SEED_SRC);
     this.jobDefinitions = JobLoader.fromFiles(this.jobDefinitionSeedFiles);
+    this.logger.trace(`_initSeededJobDefs:jobDefinitions: ${this.jobDefinitions}`);
 
     this._initJobs();
   }
