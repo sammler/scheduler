@@ -18,7 +18,7 @@ class AppServer {
     this.jobDefinitionSeedFiles = [];
     this.jobDefinitions = [];
     this.cronJobs = [];
-    // this._logConfig();
+    // This._logConfig();
 
     const killJobs = function () {
       logger.trace('OK, let\'s kill some left-overs:');
@@ -26,12 +26,12 @@ class AppServer {
         this.cronJobs.forEach(cronJob => {
           console.log('Cancelling cronJob: ', cronJob.name);
           cronJob.cancel();
-        })
+        });
       }
     };
 
     process.on('SIGINT', killJobs);
-    process.on('SIGUSR2', killJobs); // nodemon restart
+    process.on('SIGUSR2', killJobs); // Nodemon restart
   }
 
   _logConfig() {
@@ -53,7 +53,6 @@ class AppServer {
   }
 
   async _initStan() {
-
 
     let stanPublisher = new StanPublisher();
     try {

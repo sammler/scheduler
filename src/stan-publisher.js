@@ -3,7 +3,7 @@ const logger = require('winster').instance();
 
 let stan;
 
-// const killStan = function() {
+// Const killStan = function() {
 //   logger.trace('Caught interrupt signal');
 //   if (stan) {
 //     console.log(stan);
@@ -25,10 +25,9 @@ class StanPublisher {
     this.clusterId = 'test-cluster';
     this.clientId = 'scheduler_' + process.pid;
 
-    // process.on('SIGINT', killStan);
+    // Process.on('SIGINT', killStan);
     // process.on('SIGUSR2', killStan); // nodemon restart
   }
-
 
   connect(clusterId, clientId, opts) {
 
@@ -42,34 +41,34 @@ class StanPublisher {
 
     return new Promise((resolve, reject) => {
       logger.trace('clientId', this.clientId);
-      let stanInstance = Stan.connect(clusterId || this.clusterId, clientId || this.clientId, defaultOpts, function() {
+      let stanInstance = Stan.connect(clusterId || this.clusterId, clientId || this.clientId, defaultOpts, function () {
         console.log('foo');
       });
 
-      stanInstance.on('connect', function() {
+      stanInstance.on('connect', function () {
         logger.trace('We are connected to stan.');
         stan = stanInstance;
         resolve(stanInstance);
       });
 
-      stanInstance.on('close', function() {
-        logger.trace('Connection to stan is closed.')
+      stanInstance.on('close', function () {
+        logger.trace('Connection to stan is closed.');
       });
 
-      stanInstance.on('error', function(err) {
+      stanInstance.on('error', function (err) {
         logger.error(`Error connecting to Stan: "${err}"`);
         reject(err);
       });
 
-      stanInstance.on('disconnect', function() {
+      stanInstance.on('disconnect', function () {
         logger.trace('Disconnect to stan ...');
       });
 
-      stanInstance.on('reconnect', function() {
+      stanInstance.on('reconnect', function () {
         logger.trace('Reconnect to stan ...');
       });
 
-      stanInstance.on('reconnecting', function() {
+      stanInstance.on('reconnecting', function () {
         logger.trace('Reconnecting to stan ...');
       });
     });
@@ -77,7 +76,7 @@ class StanPublisher {
 
   publish(subject, data, ackHandler) {
     if (stan) {
-      stan.publish(subject, data, ackHandler)
+      stan.publish(subject, data, ackHandler);
     } else {
       this.logger.error('No instance of stan available');
       process.exit(1);
@@ -86,5 +85,4 @@ class StanPublisher {
 }
 
 module.exports = StanPublisher;
-
 

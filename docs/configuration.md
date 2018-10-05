@@ -15,16 +15,15 @@
 ```yaml
 jobs:
   - name: heartbeat       # The name of a job
-    strategy: 'cron'      # Default strategy for this job, by default only `cron` for now.
     enabled: true         # Whether this job is enabled or not
-    trace_id:             # Will be generated when the job is initiated (UUIID/v1).
-    ts:                   # Will be generated when the job is runn (timestamp).
+    strategy: cron        # Default strategy for this job, by default only `cron` for now.
     cron:                 # All the cron related settings.
       def: "* * * * * *"  # Definition of the cron job.
     nats:
-      subject: "foo"      # Nats' subject.
-    payload:              # Various payload settings.
-      setting1:
-      setting2:
+      subject: foo        # Nats' subject.
+    data:                 # Various payload settings, passed over to nats.
+      setting1: foo           
+      setting2: bar
+      setting3: baz
     
 ```
