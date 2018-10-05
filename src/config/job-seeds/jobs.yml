@@ -6,7 +6,7 @@ jobs:
       def: "* * * * *"
     nats:
       subject: heartbeat.every.minute
-    payload:
+    data:
       foo: bar
   - name: heartbeat_every_two_minutes
     enabled: true
@@ -15,7 +15,7 @@ jobs:
       def: "*/2 * * * *"
     nats:
       subject: heartbeat.every.two_minutes
-    payload:
+    data:
       foo: bar
   - name: heartbeat_every_five_minutes
     enabled: true
@@ -24,5 +24,5 @@ jobs:
       def: "*/5 * * * *"
     nats:
       subject: heartbeat.every.five_minutes
-    payload:
+    data:
       foo: bar

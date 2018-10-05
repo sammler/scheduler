@@ -5,6 +5,7 @@ const fileHelpers = require('./lib/file-helpers');
 const JobLoader = require('./job-loader');
 const schedule = require('node-schedule');
 const uuidv1 = require('uuid/v1');
+
 const StanPublisher = require('./stan-publisher');
 
 const JOB_SEED_SRC = path.resolve(__dirname, './config/job-seeds');
@@ -19,7 +20,7 @@ class AppServer {
     this.cronJobs = [];
     // this._logConfig();
 
-    const killJobs = function() {
+    const killJobs = function () {
       logger.trace('OK, let\'s kill some left-overs:');
       if (this.cronJobs) {
         this.cronJobs.forEach(cronJob => {
@@ -44,23 +45,30 @@ class AppServer {
    * Initializes the scheduled jobs.
    * @private
    */
-  _init() {
+  async _init() {
     this.logger.trace('_init');
-    this.stan = new StanPublisher();
-    this.stan.connect();
-    process.on('SIGINT', this.stan.kill);
-    process.on('SIGUSR2', this.stan.kill);
+
+    await this._initStan();
     this._initSeededJobDefs();
+  }
+
+  async _initStan() {
+
+
+    let stanPublisher = new StanPublisher();
+    try {
+      this.stan = await stanPublisher.connect();
+    } catch (err) {
+      this.logger.error(`Error initializing stan: "${err}"`);
+      process.exit(1);
+    }
   }
 
   _initSeededJobDefs() {
     this.logger.trace('_initSeededJobDefs');
 
     this.jobDefinitionSeedFiles = fileHelpers.getFiles(JOB_SEED_SRC);
-    //logger.trace('jobDefinitionSeedFiles', this.jobDefinitionSeedFiles);
-
     this.jobDefinitions = JobLoader.fromFiles(this.jobDefinitionSeedFiles);
-    //logger.trace('jobDefinitions', this.jobDefinitions);
 
     this._initJobs();
   }
@@ -73,7 +81,6 @@ class AppServer {
         this._initCronJob(job);
       }
     });
-
   }
 
   _initCronJob(job) {
@@ -83,10 +90,20 @@ class AppServer {
       currentJob.trace_id = uuidv1();
       currentJob.ts_pub = o;
       logger.trace(`OK, a job has been triggered (by cron): ${currentJob.name}`);
-      //this._nats.publish(currentJob.nats.subject, currentJob, () => {
-      //  logger.trace(`OK, we have published a message triggered by the job: ${currentJob.name}`);
-      //});
 
+      if (this.stan) {
+        this.stan.publish(currentJob.nats.subject, JSON.stringify(currentJob.data), (err, guid) => {
+          logger.trace('--');
+          logger.trace(`OK, we have published a message triggered by the job ${currentJob.name}`);
+          if (err) {
+            logger.trace(`Error returned from stan: "${err}"`);
+          } else {
+            logger.trace(`Guid returned from stan: "${guid}"`);
+          }
+        });
+      } else {
+        logger.error('We have received a job, but stan is not ready');
+      }
     });
     process.on('SIGINT', function () {
       if (j) {
@@ -104,8 +121,8 @@ class AppServer {
    *   - Initializing the jobs.
    */
   async start() {
-    this.logger.trace('start');
-    this._init();
+    this.logger.trace('Starting the appServer ...');
+    await this._init();
   }
 
   /**
@@ -115,7 +132,7 @@ class AppServer {
    *   - Stopping the running jobs.
    */
   async stop() {
-
+    this.logger.trace('Stopping the appServer ...');
   }
 }
 

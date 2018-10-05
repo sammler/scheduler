@@ -5,7 +5,7 @@ help:													## Show this help.
 	@echo ''
 .PHONY: help
 
-gen-readme:										## Generate README.md (using docker-verb)
+gen-readme:										## Generate README.md (using docker-verb).
 	docker run --rm -v ${PWD}:/opt/verb stefanwalther/verb
 .PHONY: gen-readme
 
@@ -13,11 +13,11 @@ up:
 	docker-compose -f docker-compose.yml up -d
 .PHONY: up
 
-up-deps-i:										## Start required servise for development (interactive mode)
+up-deps-i:										## Start required servise for development (interactive mode).
 	docker-compose -f docker-compose.deps.yml up
 .PHONY: up-deps-i
 
-up-deps:											## Start required services for development
+up-deps:											## Start required services for development.
 	docker-compose -f docker-compose.deps.yml up -d
 .PHONY: up-deps
 
@@ -25,9 +25,13 @@ down:
 	docker-compose -f -docker-compose.yml down
 .PHONY: down
 
-down-deps:										## Tear down services required for development
+down-deps:										## Tear down services required for development.
 	docker-compose -f docker-compose.deps.yml down -t 0
 .PHONY: down-deps
+
+clean-deps: down-deps					## Tear down dependent service + clean-up artifacts.
+	rm -rf ./.datastore
+.PHONY: clean-deps
 
 del-nats-store:
 	rm -rf ./.datastore
