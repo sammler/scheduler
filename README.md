@@ -63,12 +63,12 @@ Environment variables used by the service:
 | `NATS_URI`            | Resource location of NATS                                               | string        | `nats://localhost:4222` |
 | `PORT`                | Port of the service.                                                    | string        | `3001`                  |
 
-## Loading job seeds
+### Loading job seeds
 
 - If `LOAD_JOBS_FROM_FILE` all `yml` files in `/opt/scheduler/src/config/job-seeds` will be loaded.
 - (Not implemented yet) On top of that one can define additional files to be loaded by passing those in the env variable `JOB_FILES`.
 
-## A job definition file
+### A job definition file
 
 ```yaml
 jobs:
@@ -88,7 +88,7 @@ jobs:
 
 ## Developing
 
-## Required services (dependencies)
+### Required services (dependencies)
 
 - `make up-deps` - Start required services.
 - `make up-deps-i` - Start required services (interactive mode).

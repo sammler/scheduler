@@ -1,4 +1,4 @@
-## Required services (dependencies)
+### Required services (dependencies)
 
 - `make up-deps` - Start required services.
 - `make up-deps-i` - Start required services (interactive mode).
