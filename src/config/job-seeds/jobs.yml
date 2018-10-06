@@ -5,24 +5,24 @@ jobs:
     cron:
       def: "* * * * *"
     nats:
-      subject: heartbeat.every.minute
-    data:
-      foo: bar
+      subject: HeartbeatRequest
+      data:
+        name: every_minute
   - name: heartbeat_every_two_minutes
     enabled: true
     strategy: cron
     cron:
       def: "*/2 * * * *"
     nats:
-      subject: heartbeat.every.two_minutes
-    data:
-      foo: bar
+      subject: HeartbeatRequest
+      data:
+        name: every_two_minutes
   - name: heartbeat_every_five_minutes
     enabled: true
     strategy: cron
     cron:
       def: "*/5 * * * *"
     nats:
-      subject: heartbeat.every.five_minutes
-    data:
-      foo: bar
+      subject: HeartbeatRequest
+      data:
+        name: every_five_minutes

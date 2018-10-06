@@ -94,7 +94,7 @@ class AppServer {
       logger.trace(`OK, a job has been triggered (by cron): ${currentJob.name}`);
 
       if (this.stan) {
-        this.stan.publish(currentJob.nats.subject, JSON.stringify(currentJob.data), (err, guid) => {
+        this.stan.publish(currentJob.nats.subject, JSON.stringify(currentJob.nats.data), (err, guid) => {
           logger.trace('--');
           logger.trace(`OK, we have published a message triggered by the job ${currentJob.name}`);
           if (err) {

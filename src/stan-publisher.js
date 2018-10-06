@@ -1,7 +1,7 @@
 const Stan = require('node-nats-streaming');
 const logger = require('winster').instance();
 
-let stan;
+let stan = null;
 
 // Const killStan = function() {
 //   logger.trace('Caught interrupt signal');
@@ -71,6 +71,7 @@ class StanPublisher {
       stanInstance.on('reconnecting', function () {
         logger.trace('Reconnecting to stan ...');
       });
+
     });
   }
 
