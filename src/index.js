@@ -1,7 +1,9 @@
 const _ = require('lodash');                      // eslint-disable-line
 const defaultConfig = require('./config/config'); // eslint-disable-line
 const AppServer = require('./app-server');
+const logger = require('winster').instance();
 
+const appServer = new AppServer(defaultConfig);
 checkRequiredEnv();
 
 /**
@@ -15,6 +17,11 @@ function checkRequiredEnv() {
   // }
 }
 
-const appServer = new AppServer(defaultConfig);
-appServer.start();
+(async () => {
+  try {
+    await appServer.start();
+  } catch (err) {
+    logger.trace(`Cannot start appServer: ${err}`);
+  }
+})();
 

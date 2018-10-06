@@ -1,10 +1,12 @@
+ARG NODE_VER="10.9.0"
+
 ## -------------------------------------------------------------------
 ##                            BASE IMAGE
 ## ~~
 ## We need full node as we need git to download from some GitHub repos
 ## as of now.
 ## -------------------------------------------------------------------
-FROM node:10.9.0 as BASE
+FROM node:${NODE_VER} as BASE
 
 ARG PORT=3001
 ENV PORT=$PORT
@@ -48,7 +50,7 @@ CMD ["/bin/bash"]
 ## -------------------------------------------------------------------
 ##                              RELEASE
 ## -------------------------------------------------------------------
-FROM node:10.9.0-alpine as RELEASE
+FROM node:${NODE_VER}-alpine as RELEASE
 
 ARG PORT=3001
 ENV PORT=$PORT

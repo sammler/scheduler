@@ -1,3 +1,6 @@
+REPO = sammlerio
+SERVICE = scheduler
+
 help:													## Show this help.
 	@echo ''
 	@echo 'Available commands:'
@@ -46,11 +49,18 @@ del-nats-store:
 .PHONY: del-nats-store
 
 build:												## Build the docker image.
-	docker build -t sammlerio/scheduler .
+	docker build -t ${REPO}/${SERVICE} .
 .PHONY: build
 
+run:
+	docker run -it ${REPO}/${SERVICE}
+
+get-image-size:
+	docker images --format "{{.Repository}} {{.Size}}" | grep scheduler | cut -d\   -f2
+.PHONY: get-image-size
+
 build-no-cache:								## Build the docker image (no-cache).
-	docker build --no-cache -t sammlerio/scheduler .
+	docker build --no-cache -t ${REPO}/${SERVICE} .
 .PHONY: build
 
 start:
