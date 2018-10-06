@@ -41,6 +41,10 @@ build:												## Build the docker image.
 	docker build -t sammlerio/scheduler .
 .PHONY: build
 
+build-no-cache:								## Build the docker image (no-cache).
+	docker build --no-cache -t sammlerio/scheduler .
+.PHONY: build
+
 start:
 	npm run start
 .PHONY: start
