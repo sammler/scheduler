@@ -27,5 +27,11 @@ services:
 
   scheduler:
     image: sammlerio/scheduler
+    restart: always
     ports:
       - "3001:3001"
+    environment:
+      - LOAD_JOBS_FROM_FILE=true
+      - NATS_URI=nats://nats-streaming:4222
+    command: ["npm", "run", "start"]
+

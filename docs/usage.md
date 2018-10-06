@@ -1,11 +1,9 @@
-## Start required services for development
+## Required services (dependencies)
 
-```
-$ make up-deps
-```
+- `make up-deps` - Start required services.
+- `make up-deps-i` - Start required services (interactive mode).
+- `make down-deps` - Stop required services.
+- `clean-deps` - Step required services + clean-up nats storage.
 
-## Tear down required services for development
+The commands above use the docker file `docker-compose.deps.yml`.
 
-```
-$ make down-deps
-```
