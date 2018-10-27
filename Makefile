@@ -56,7 +56,7 @@ run:
 	docker run -it ${REPO}/${SERVICE}
 
 get-image-size:
-	docker images --format "{{.Repository}} {{.Size}}" | grep scheduler | cut -d\   -f2
+	docker images --format "{{.Repository}} {{.Size}}" | grep ${REPO}/${SERVICE} | cut -d\   -f2
 .PHONY: get-image-size
 
 build-no-cache:								## Build the docker image (no-cache).
